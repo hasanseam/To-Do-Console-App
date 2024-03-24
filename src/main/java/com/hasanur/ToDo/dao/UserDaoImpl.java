@@ -6,6 +6,8 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public class UserDaoImpl implements UserDao{
@@ -20,7 +22,16 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public User findByEmail(String email) {
-        return null;
+        // Use parameterized query to avoid SQL injection
+        List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+                .setParameter("email", email)
+                .getResultList();
+        // Check if any user found with the given email
+        if (!users.isEmpty()) {
+            return users.get(0);
+        } else {
+            return null; // Return null if no user found
+        }
     }
 
     @Override

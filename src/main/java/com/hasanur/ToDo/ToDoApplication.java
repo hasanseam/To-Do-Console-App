@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -61,7 +62,22 @@ public class ToDoApplication {
 		Scanner scanner = new Scanner(System.in);
 		String email = scanner.next();
 
+		System.out.print("\nPassword :");
+		String password = scanner.next();
+
 		User user = userDao.findByEmail(email);
+		if(user==null){
+			System.out.println("User not found");
+		}else{
+			System.out.println(password+" "+user.getPassword());
+			if(Objects.equals(password, user.getPassword())){
+				System.out.println("Login Successful");
+			}else{
+				System.out.println("Password incorrect");
+			}
+		}
+
+
 
 	}
 

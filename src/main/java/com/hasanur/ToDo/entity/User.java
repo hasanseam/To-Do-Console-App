@@ -23,6 +23,11 @@ public class User {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
+    //default constructor
+    public User(){
+
+    }
+
     public User(String firstName, String lastName, String email,String password) {
         this.firstName = firstName;
         this.lastName = lastName;
